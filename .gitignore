@@ -1,5 +1,9 @@
-build
-dist
+build/
+dist/
 *egg*
 .python-version
 .idea/
+.DS_Store
+core.spec
+requirements.txt
+pacman-3d/__pycache__/
