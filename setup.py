@@ -5,6 +5,6 @@ setup(
     modules=['core'],
     install_requires=[
         'PyOpenGL',
-        'pygame'
+        'pygame==1.9.2'
     ]
 )
