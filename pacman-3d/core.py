@@ -1,64 +1,34 @@
 import pygame
 from pygame.locals import *
 
-from OpenGL.GL import *
-from OpenGL.GLU import *
+screen_res = (1200, 800)
 
-verticies = (
-    (1, -1, -1),
-    (1, 1, -1),
-    (-1, 1, -1),
-    (-1, -1, -1),
-    (1, -1, 1),
-    (1, 1, 1),
-    (-1, -1, 1),
-    (-1, 1, 1)
-    )
+pygame.init()
+screen = pygame.display.set_mode(screen_res, 0, 32)
+clock = pygame.time.Clock()
 
-edges = (
-    (0,1),
-    (0,3),
-    (0,4),
-    (2,1),
-    (2,3),
-    (2,7),
-    (6,3),
-    (6,4),
-    (6,7),
-    (5,1),
-    (5,4),
-    (5,7)
-    )
+nav_x, nav_y = (600, 400)
 
+background = pygame.surface.Surface(screen_res).convert()
+background.fill((0, 0, 0))
 
-def Cube():
-    glBegin(GL_LINES)
-    for edge in edges:
-        for vertex in edge:
-            glVertex3fv(verticies[vertex])
-    glEnd()
+while True:
+    key_pressend = pygame.key.get_pressed()
 
+    time_passed = clock.tick(30)
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            exit()
 
-def main():
-    pygame.init()
-    display = (800,600)
-    pygame.display.set_mode(display, DOUBLEBUF|OPENGL)
+    if key_pressend[K_UP]:
+        nav_y -= 6
+    elif key_pressend[K_DOWN]:
+        nav_y += 6
+    elif key_pressend[K_LEFT]:
+        nav_x -= 6
+    elif key_pressend[K_RIGHT]:
+        nav_x += 6
 
-    gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
-
-    glTranslatef(0.0,0.0, -5)
-
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-
-        glRotatef(1, 3, 1, 1)
-        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
-        Cube()
-        pygame.display.flip()
-        pygame.time.wait(10)
-
-
-main()
+    screen.blit(background, (0, 0))
+    pygame.draw.rect(screen, (255, 255, 0), [nav_x, nav_y, 16, 16])
+    pygame.display.update()
