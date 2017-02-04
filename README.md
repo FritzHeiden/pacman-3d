@@ -10,6 +10,11 @@ $ pyenv --version # https://github.com/yyuu/pyenv
 $ which pyenv-virtualenv # pip install pyenv-virtualenv
 ```
 
+#### First init
+```
+$ make first_init
+```
+
 #### Init virtual environment and install local packages
 
 ```
@@ -32,4 +37,4 @@ $ make build
 #### Further make commands
 ```
 $ make help
-``
+```
