@@ -18,10 +18,10 @@ init:
 	pip-sync
 
 run:
-	python pacman-3d/core.py
+	python pacman3d/run.py
 
-build:
-	pyinstaller --windowed pacman-3d/core.py
+compile:
+	sudo pyinstaller --windowed pacman3d/run.py
 
 clean:
 	rm -rf dist/* build/*
@@ -44,9 +44,9 @@ help:
 	@echo  '                    and install required packages from requirements.in'
 	@echo  ''
 	@echo  'Run Project:'
-	@echo  '  run 			  - Run pacman-3d/core.py
+	@echo  '  run 			  - Run pacman-3d/run.py
 	@echo  'Build Project:'
-	@echo  '  build		  - Build executable file in dist folder'
+	@echo  '  compile		  - Build executable file in dist folder'
 	@echo  ''
 	@echo  'Cleaning Project:'
 	@echo  '  clean           - Clean dist and build folder'

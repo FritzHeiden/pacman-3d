@@ -6,4 +6,4 @@ dist/
 .DS_Store
 core.spec
 requirements.txt
-pacman-3d/__pycache__/
+__pycache__/
