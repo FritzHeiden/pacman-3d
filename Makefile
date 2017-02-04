@@ -16,20 +16,22 @@ init:
 	pip install pip-tools
 	pip-compile
 	pip-sync
+	#python setup.py develop
 
 run:
+	pip-sync
 	python pacman3d/run.py
 
 compile:
 	sudo pyinstaller --windowed pacman3d/run.py
 
 clean:
-	rm -rf dist/* build/*
+	sudo rm -rf dist/* build/*
 
 cleanall:
-	rm -rf dist/ build/
+	sudo rm -rf dist/ build/
 	pyenv uninstall pacman
-	rm -f python-version
+	sudo rm -f python-version
 
 mrpropper:
 	make cleanall

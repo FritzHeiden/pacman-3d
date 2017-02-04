@@ -1,3 +1,5 @@
 pygame==1.9.2
 PyOpenGL
 pyinstaller
+numpy
+-e .
