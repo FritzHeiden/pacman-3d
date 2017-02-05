@@ -24,14 +24,11 @@ run:
 	python pacman3d/run.py
 
 compile:
-	pyinstaller --windowed pacman3d/run.py
-	y
-	y
+	pyinstaller --noconfirm --icon data/pacman.icns --add-data data/maze.txt:data --add-data README.md:. --windowed pacman3d/run.py
 
 clean:
 	rm -rf dist/* build/*
 	rm run.spec
-	rm core.spec
 
 cleanall:
 	rm -rf dist/ build/

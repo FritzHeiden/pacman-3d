@@ -4,13 +4,23 @@ from pacman3d.pacman import Pacman
 from numpy import loadtxt
 from pacman3d.game_board import GameBoard
 from pacman3d.ghost import Ghost
+import sys
+import os
 
+""" Get absolute path to resource, works for dev and for PyInstaller """
+def resource_path(relative_path):
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 pygame.init()
 tile_width, tile_height = (20, 20)
 game_board = GameBoard(tile_width, tile_height)
-# game_board.read_in_game_board('maze.txt')
-game_board.read_in_game_board('pacman3d/maze.txt')
+game_board.read_in_game_board(resource_path('data/maze.txt'))
 
 rows, cols = game_board.get_size()
 
@@ -53,3 +63,6 @@ while True:
         exit()
 
     pygame.display.update()
+
+
+
