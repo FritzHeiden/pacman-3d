@@ -8,6 +8,7 @@ setup(
     description='Pacman in 3d with pygame',
     license='MIT',
     packages=['pacman3d'],
+    package_data={'pacman3d': ['license.txt']},
     long_description=('README.md'),
     classifiers=[
         'Development Status :: 3 - Alpha',

@@ -25,6 +25,8 @@ run:
 
 compile:
 	pyinstaller --windowed pacman3d/run.py
+	y
+	y
 
 clean:
 	rm -rf dist/* build/*
