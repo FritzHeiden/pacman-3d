@@ -27,10 +27,11 @@ ghost_list.append(Ghost((12, 12), game_board.nodelist[20]))
 ghost_list.append(Ghost((12, 12), game_board.nodelist[30]))
 ghost_list.append(Ghost((12, 12), game_board.nodelist[40]))
 
-# clock = pygame.time.Clock()
+clock = pygame.time.Clock()
 
 
 while True:
+    dt = clock.tick(30) / 1000.0
     for event in pygame.event.get():
         if event.type == QUIT:
             exit()

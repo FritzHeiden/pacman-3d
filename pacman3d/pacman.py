@@ -11,12 +11,9 @@ class Pacman(AbstractEntity):
         self.move_strategy = MoveStrategy(node, self)
         # self.speed = self.node.selfgit
 
-    def draw(self, screen):
-        super().draw(screen)
-        self.move_strategy.draw_target_node(screen)
-
-    def update(self):
-        self.move_strategy.move()
+    # def draw(self, screen):
+    #     super().draw(screen)
+        # self.move_strategy.draw_target_node(screen)
 
     def eat_breadcrump(self, breadcrumps, score):
         for breadcrump in breadcrumps:

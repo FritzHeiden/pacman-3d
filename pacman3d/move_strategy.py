@@ -2,15 +2,10 @@ from pacman3d.vectors import Vector2D
 from pygame.locals import *
 import pygame
 import random
+from pacman3d.abstract_movement import AbstractMoveStrategy
 
 
-class MoveStrategy:
-
-    UP = Vector2D(0, -1)
-    DOWN = Vector2D(0, 1)
-    LEFT = Vector2D(-1, 0)
-    RIGHT = Vector2D(1, 0)
-    STOP = Vector2D(0, 0)
+class MoveStrategy(AbstractMoveStrategy):
 
     def __init__(self, node, moving_object):
         self.node = node
@@ -34,38 +29,7 @@ class MoveStrategy:
                 self.target = self.node.right_neighbor
             else:
                 self.direction = self.STOP
-        self.moving_object.position = self.moving_object.position + self.direction
-
-    def get_direction_str(self, dict):
-        for i, value in dict.items():
-            if value == self.node:
-                return i
-
-    def auto_move(self):
-        if self.moving_object.position == self.target.position:
-
-            next_targets = self.target.get_neighbor_list()
-            next_targets.pop(self.get_direction_str(next_targets), None)
-            self.node = self.target
-            next_target = random.choice(list(next_targets.keys()))
-
-            if next_target == 'LEFT':
-                self.target = next_targets['LEFT']
-                self.direction = self.LEFT
-            if next_target == 'RIGHT':
-                self.target = next_targets['RIGHT']
-                self.direction = self.RIGHT
-            if next_target == 'UP':
-                self.target = next_targets['UP']
-                self.direction = self.UP
-            if next_target == 'DOWN':
-                self.target = next_targets['DOWN']
-                self.direction = self.DOWN
-        self.moving_object.position = self.moving_object.position + self.direction
-
-    def draw_target_node(self, screen):
-        pygame.draw.circle(screen, (0, 200, 0), self.target.position.to_tuple(), 8)
-        pygame.draw.circle(screen, (0, 0, 200), self.node.position.to_tuple(), 8)
+        super().move()
 
     def key_continuous(self, key):
         if key[K_UP]:

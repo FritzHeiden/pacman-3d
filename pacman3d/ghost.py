@@ -1,15 +1,13 @@
 from pacman3d.entity import AbstractEntity
-from pacman3d.move_strategy import MoveStrategy
+from pacman3d.auto_move_strategy import AutoMoveStrategy
 
 class Ghost(AbstractEntity):
 
     def __init__(self, dim, node):
         super().__init__(dim, node)
         self.COLOR = (255, 0, 255)
-        self.move_strategy = MoveStrategy(node, self)
-
-    def update(self):
-        self.move_strategy.auto_move()
+        self.move_strategy = AutoMoveStrategy(node, self)
+        # self.speed = 4
 
     def draw(self, screen):
         super().draw(screen)
