@@ -17,3 +17,9 @@ class Pacman(AbstractEntity):
 
     def update(self):
         self.move_strategy.move()
+
+    def eat_breadcrump(self, breadcrumps, score):
+        for breadcrump in breadcrumps:
+            if breadcrump.position == self.position:
+                breadcrumps.remove(breadcrump)
+                score.hit(10)

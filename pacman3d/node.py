@@ -1,17 +1,14 @@
 from pacman3d.vectors import Vector2D
+from pacman3d.abstract_node import AbstractNode
 
 
-class Node(object):
+class Node(AbstractNode):
     def __init__(self, position, width, height):
-        self.col, self.row = position
-        self.position = Vector2D(self.col*width - 1/2*width, self.row*height - 1/2*height)
+        super().__init__(position, width, height)
         self.left_neighbor = None
         self.right_neighbor = None
         self.upper_neighbor = None
         self.lower_neighbor = None
-
-    def __str__(self, *args, **kwargs):
-        return str(self.row) + ' / ' + str(self.col)
 
     def set_neighbors(self, left_neighbor, right_neighbor, upper_neighbor, lower_neighbor):
         self.set_left_neighbor(left_neighbor, True)
@@ -52,11 +49,7 @@ class Node(object):
 
         return neighbor_list
 
-    def get_row_col(self):
-        return self.row, self.col
-
     def set_neighbor(self, neighbor, position):
-        print(self)
         if position == 'left':
             self.set_left_neighbor(neighbor, True)
         elif position == 'right':

@@ -1,13 +1,16 @@
 from numpy import loadtxt
 from pacman3d.node import Node
 import pygame
-
+from pacman3d.breadcrump import Breadcrump
+from pacman3d.score import Score
 
 class GameBoard(object):
     def __init__(self, tile_width, tile_height):
         self.nodelist = []
+        self.breadcrumb_list = []
         self.tile_width = tile_width
         self.tile_height = tile_height
+        self.score = Score()
 
     '''Input a list of nodes, and the row and col integers.  Returns
     the Node object located at that grid position.'''
@@ -32,7 +35,10 @@ class GameBoard(object):
     def draw(self, screen):
         for node in self.nodelist:
             for key, next_node in node.get_neighbor_list().items():
-                pygame.draw.line(screen, (255,0,0), node.position.to_tuple(), next_node.position.to_tuple(), 20)
+                pygame.draw.line(screen, (255, 0, 0), node.position.to_tuple(), next_node.position.to_tuple(), 20)
+
+        for breadcrump in self.breadcrumb_list:
+            breadcrump.draw(screen)
 
     '''Create the list of nodes from a text file'''
     def read_in_game_board(self, filename):
@@ -42,6 +48,7 @@ class GameBoard(object):
             for col in range(self.cols):
                 if layout[row][col] == '+':
                     self.nodelist.append(Node((col,row), self.tile_width, self.tile_height))
+                    self.breadcrumb_list.append(Breadcrump((col, row), self.tile_width, self.tile_height))
 
         symbols = ['-','-','|','|']
 
@@ -59,6 +66,8 @@ class GameBoard(object):
                     val = layout[row+y_offset][col+x_offset]
                     if val in symbols:
                         while val == '-' or val == '|':
+                            self.breadcrumb_list.append(Breadcrump((col+x_offset, row+y_offset),
+                                                        self.tile_width, self.tile_height))
                             x_offset += val_x
                             y_offset += val_y
                             val = layout[row+y_offset][col+x_offset]

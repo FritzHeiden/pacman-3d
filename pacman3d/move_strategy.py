@@ -48,7 +48,6 @@ class MoveStrategy:
             next_targets.pop(self.get_direction_str(next_targets), None)
             self.node = self.target
             next_target = random.choice(list(next_targets.keys()))
-            print(next_target)
 
             if next_target == 'LEFT':
                 self.target = next_targets['LEFT']

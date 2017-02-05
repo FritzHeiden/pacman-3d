@@ -14,3 +14,8 @@ class Ghost(AbstractEntity):
     def draw(self, screen):
         super().draw(screen)
         self.move_strategy.draw_target_node(screen)
+
+    def kill_pacman(self, position_pacman, score):
+        if self.position == position_pacman:
+            print('kill')
+            score.kill()

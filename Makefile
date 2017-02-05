@@ -24,15 +24,17 @@ run:
 	python pacman3d/run.py
 
 compile:
-	sudo pyinstaller --windowed pacman3d/run.py
+	pyinstaller --windowed pacman3d/run.py
 
 clean:
-	sudo rm -rf dist/* build/*
+	rm -rf dist/* build/*
+	rm run.spec
+	rm core.spec
 
 cleanall:
-	sudo rm -rf dist/ build/
+	rm -rf dist/ build/
 	pyenv uninstall pacman
-	sudo rm -f python-version
+	rm -f python-version
 
 mrpropper:
 	make cleanall

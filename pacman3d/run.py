@@ -17,60 +17,38 @@ rows, cols = game_board.get_size()
 screen = pygame.display.set_mode((cols*tile_width, rows*tile_height), 0, 32)
 background = pygame.surface.Surface((cols*tile_width, rows*tile_height)).convert()
 background.fill((0,0,0))
+font = pygame.font.SysFont("monospace", 35)
 
+score = None
 pacman = Pacman((16,16), game_board.nodelist[4])
-ghost0 = Ghost((12, 12), game_board.nodelist[10])
+ghost_list = list()
+ghost_list.append(Ghost((12, 12), game_board.nodelist[10]))
+ghost_list.append(Ghost((12, 12), game_board.nodelist[20]))
+ghost_list.append(Ghost((12, 12), game_board.nodelist[30]))
+ghost_list.append(Ghost((12, 12), game_board.nodelist[40]))
 
 # clock = pygame.time.Clock()
 
 
 while True:
-
     for event in pygame.event.get():
         if event.type == QUIT:
             exit()
 
     screen.blit(background, (0,0))
+    screen.blit(font.render(str(game_board.score), 10, (255, 0, 0)), (0,0))
 
     game_board.draw(screen)
     pacman.draw(screen)
     pacman.update()
+    pacman.eat_breadcrump(game_board.breadcrumb_list, game_board.score)
 
-    ghost0.draw(screen)
-    ghost0.update()
+    for ghost in ghost_list:
+        ghost.draw(screen)
+        ghost.update()
+        ghost.kill_pacman(pacman.position, game_board.score)
+
+    if game_board.score.lives == 0:
+        exit()
 
     pygame.display.update()
-
-
-
-# pygame.init()
-
-# layout = loadtxt('pacman3d/maze.txt', dtype=bytes).astype(str)
-# rows, cols = layout.shape
-# width, height = (16, 16)
-# SCREEN_SIZE = (width*cols, height*rows)
-# screen = pygame.display.set_mode(SCREEN_SIZE, 0, 32)
-# tiles = []
-#
-# for col in range(cols):
-#     for row in range(rows):
-#         value = layout[row][col]
-#         if value == '0':
-#             pos = (col*width, row*height)
-#             tiles.append(Tile((width, height), pos))
-#
-# background = pygame.surface.Surface(SCREEN_SIZE).convert()
-# background.fill((0,0,0))
-# pacman = Pacman((width,height), [32*2,32*4])
-#
-# while True:
-#     for event in pygame.event.get():
-#         if event.type == QUIT:
-#             exit()
-#     pacman.changeDirection(tiles)
-#
-#     screen.blit(background, (0,0))
-#     for tile in tiles:
-#         tile.draw(screen)
-#     pacman.draw(screen)
-#     pygame.display.update()
