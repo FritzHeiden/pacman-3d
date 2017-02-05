@@ -3,48 +3,41 @@ from pygame.locals import *
 from pacman3d.pacman import Pacman
 from pacman3d.tile import Tile
 from numpy import loadtxt
-from pacman3d.node_group import NodeGroup
+from pacman3d.game_board import GameBoard
 
 
 pygame.init()
-width, height = (24, 24)
-screen = pygame.display.set_mode((28*width, 36*height), 0, 32)
-background = pygame.surface.Surface((10*width,10*height)).convert()
+tile_width, tile_height = (160, 160)
+rows, cols = (3, 3)
+screen = pygame.display.set_mode((cols*tile_width, rows*tile_height), 0, 32)
+background = pygame.surface.Surface((cols*tile_width, rows*tile_height)).convert()
 background.fill((0,0,0))
-filename = 'pacman3d/maze.txt'
-nodes = NodeGroup(width, height)
-nodes.createNodeList(filename)
-pacman = Pacman((16,16), nodes.nodelist[47])
 
-nodes.nodelist[26].portal = nodes.nodelist[31]
-nodes.nodelist[31].portal = nodes.nodelist[26]
+game_board = GameBoard(tile_width, tile_height, rows, cols)
+game_board.create_basic_game_board()
 
-clock = pygame.time.Clock()
+
+# nodes.createNodeList(filename)
+pacman = Pacman((16,16), game_board.nodelist[4])
+#
+# nodes.nodelist[26].portal = nodes.nodelist[31]
+# nodes.nodelist[31].portal = nodes.nodelist[26]
+
+# clock = pygame.time.Clock()
 
 
 while True:
-    dt = clock.tick(30) / 1000.0
-    key_pressed = pygame.key.get_pressed()
-    pacman.move.key_continuous(key_pressed)
 
     for event in pygame.event.get():
         if event.type == QUIT:
             exit()
-        elif event.type == KEYDOWN:
-            pacman.move.keyDiscrete(event.key)
 
     screen.blit(background, (0,0))
 
-    for node in nodes.nodelist:
-        for nextnode in node.neighbors:
-            pygame.draw.line(screen,(255,255,255),node.position.toTuple(), nextnode.position.toTuple(), 2)
+    game_board.draw(screen)
+    pacman.update()
+    pacman.draw(screen)
 
-    for node in nodes.nodelist:
-        pygame.draw.circle(screen,(255,0,0),node.position.toTuple(), 10)
-
-    pacman.update(dt)
-
-    pacman.render(screen)
     pygame.display.update()
 
 

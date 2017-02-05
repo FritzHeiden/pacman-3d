@@ -11,10 +11,10 @@ class Vector2D(object):
 
     def __str__(self):
         return "(%s, %s)"%(self.x, self.y)
-    
-    def toTuple(self):
-        '''Returns the vector as a tuple'''
-        return (self.x, self.y)
+
+    '''Returns the vector as a tuple'''
+    def to_tuple(self):
+        return int(self.x), int(self.y)
 
     @staticmethod
     def deg_to_rad(degree):

@@ -8,5 +8,5 @@ class AbstractEntity(object):
         self.COLOR = (0,0,0)
 
     def draw(self, screen):
-        values = list(self.pos.toTuple()) + list(self.dim)
+        values = list(self.pos.to_tuple()) + list(self.dim)
         pygame.draw.rect(screen, self.COLOR, values)

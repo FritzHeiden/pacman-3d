@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 from pacman3d.entity import AbstractEntity
 from pacman3d.stack import Stack
-from pacman3d.four_way_moving import FourWayMoving
+from pacman3d.move_strategy import MoveStrategy
 
 
 class Pacman(object):
@@ -11,15 +11,19 @@ class Pacman(object):
         self.node = node
         self.position = node.position
         self.COLOR = (255, 255, 0)
-        self.move = FourWayMoving(node, self)
-        self.speed = self.node.selfgit
+        self.move_strategy = MoveStrategy(node, self)
+        # self.speed = self.node.selfgit
 
-    def render(self, screen):
-        x, y = self.position.toTuple()
+    def draw(self, screen):
+        x, y = self.position.to_tuple()
         pygame.draw.circle(screen, self.COLOR, (int(x), int(y)), self.dim[0])
+        self.move_strategy.draw_target_node(screen)
 
-    def update(self, dt):
-        self.move.update(dt)
+    def update(self):
+        self.move_strategy.move()
+
+    def set_position(self, position):
+        self.position = position
 
 
 
