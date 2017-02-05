@@ -1,6 +1,8 @@
 from pacman3d.vectors import Vector2D
 from pygame.locals import *
 import pygame
+import random
+
 
 class MoveStrategy:
 
@@ -12,9 +14,10 @@ class MoveStrategy:
 
     def __init__(self, node, moving_object):
         self.node = node
-        self.target = node.upper_neighbor
+        self.target = self.node
         self.moving_object = moving_object
         self.direction = self.UP
+        self.dict_directions = {'UP': self.UP, 'DOWN': self.DOWN, 'LEFT': self.LEFT, 'RIGHT': self.RIGHT}
 
     def move(self):
         self.key_continuous(pygame.key.get_pressed())
@@ -23,7 +26,6 @@ class MoveStrategy:
 
             if self.direction == self.UP and self.node.upper_neighbor is not None:
                 self.target = self.node.upper_neighbor
-                print(self.node.upper_neighbor)
             elif self.direction == self.DOWN and self.node.lower_neighbor is not None:
                 self.target = self.node.lower_neighbor
             elif self.direction == self.LEFT and self.node.left_neighbor is not None:
@@ -32,6 +34,34 @@ class MoveStrategy:
                 self.target = self.node.right_neighbor
             else:
                 self.direction = self.STOP
+        self.moving_object.position = self.moving_object.position + self.direction
+
+    def get_direction_str(self, dict):
+        for i, value in dict.items():
+            if value == self.node:
+                return i
+
+    def auto_move(self):
+        if self.moving_object.position == self.target.position:
+
+            next_targets = self.target.get_neighbor_list()
+            next_targets.pop(self.get_direction_str(next_targets), None)
+            self.node = self.target
+            next_target = random.choice(list(next_targets.keys()))
+            print(next_target)
+
+            if next_target == 'LEFT':
+                self.target = next_targets['LEFT']
+                self.direction = self.LEFT
+            if next_target == 'RIGHT':
+                self.target = next_targets['RIGHT']
+                self.direction = self.RIGHT
+            if next_target == 'UP':
+                self.target = next_targets['UP']
+                self.direction = self.UP
+            if next_target == 'DOWN':
+                self.target = next_targets['DOWN']
+                self.direction = self.DOWN
         self.moving_object.position = self.moving_object.position + self.direction
 
     def draw_target_node(self, screen):

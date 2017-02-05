@@ -40,14 +40,28 @@ class Node(object):
             lower_neighbor.set_upper_neighbor(self)
 
     def get_neighbor_list(self):
-        neighbor_list = []
+        neighbor_list = {}
         if self.left_neighbor is not None:
-            neighbor_list.append(self.left_neighbor)
+            neighbor_list['LEFT'] = self.left_neighbor
         if self.right_neighbor is not None:
-            neighbor_list.append(self.right_neighbor)
+            neighbor_list['RIGHT'] = self.right_neighbor
         if self.upper_neighbor is not None:
-            neighbor_list.append(self.upper_neighbor)
+            neighbor_list['UP'] = self.upper_neighbor
         if self.lower_neighbor is not None:
-            neighbor_list.append(self.lower_neighbor)
+            neighbor_list['DOWN'] = self.lower_neighbor
 
         return neighbor_list
+
+    def get_row_col(self):
+        return self.row, self.col
+
+    def set_neighbor(self, neighbor, position):
+        print(self)
+        if position == 'left':
+            self.set_left_neighbor(neighbor, True)
+        elif position == 'right':
+            self.set_right_neighbor(neighbor, True)
+        elif position == 'upper':
+            self.set_upper_neighbor(neighbor, True)
+        elif position == 'lower':
+            self.set_lower_neighbor(neighbor, True)

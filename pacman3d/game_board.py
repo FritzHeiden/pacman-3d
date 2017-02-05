@@ -4,7 +4,7 @@ import pygame
 
 
 class GameBoard(object):
-    def __init__(self, tile_width, tile_height, rows, cols):
+    def __init__(self, tile_width, tile_height):
         self.nodelist = []
         self.tile_width = tile_width
         self.tile_height = tile_height
@@ -31,47 +31,39 @@ class GameBoard(object):
 
     def draw(self, screen):
         for node in self.nodelist:
-            for nextnode in node.get_neighbor_list():
-                pygame.draw.line(screen, (255,255,255), node.position.to_tuple(), nextnode.position.to_tuple(), 2)
+            for key, next_node in node.get_neighbor_list().items():
+                pygame.draw.line(screen, (255,0,0), node.position.to_tuple(), next_node.position.to_tuple(), 20)
 
+    '''Create the list of nodes from a text file'''
+    def read_in_game_board(self, filename):
+        layout = loadtxt(filename, dtype=bytes).astype(str)
+        self.rows, self.cols = layout.shape
+        for row in range(self.rows):
+            for col in range(self.cols):
+                if layout[row][col] == '+':
+                    self.nodelist.append(Node((col,row), self.tile_width, self.tile_height))
+
+        symbols = ['-','-','|','|']
+
+        directions = {'left': (-1,0), 'right': (1,0), 'upper': (0,-1), 'lower': (0,1)}
         for node in self.nodelist:
+            for key in directions:
+                row, col = node.get_row_col()
+                x_offset, y_offset = directions[key]
+                val_x, val_y = directions[key]
+                try:
+                    layout[row+y_offset][col+x_offset]
+                except IndexError:
+                    pass
+                else:
+                    val = layout[row+y_offset][col+x_offset]
+                    if val in symbols:
+                        while val == '-' or val == '|':
+                            x_offset += val_x
+                            y_offset += val_y
+                            val = layout[row+y_offset][col+x_offset]
+                        node.set_neighbor(self.get_node(row+y_offset, col+x_offset), key)
 
-            pygame.draw.circle(screen, (255,0,0), node.position.to_tuple(), 10)
+    def get_size(self):
+        return self.rows, self.cols
 
-
-
-
-
-    # def read_in_game_board(self, filename):
-    #     '''Create the list of nodes from a text file'''
-    #     layout = loadtxt(filename, dtype=bytes).astype(str)
-    #     rows, cols = layout.shape
-    #     for row in range(rows):
-    #         for col in range(cols):
-    #             if layout[row][col] == '+':
-    #                 self.nodelist.append(Node((col,row), self.width,
-    #                                           self.height))
-    #
-    #     symbols = ('-','-','|','|')
-    #     directions = ((-1,0),(1,0),(0,-1),(0,1))
-    #     for node in self.nodelist:
-    #         row, col = (node.row, node.col)
-    #         for i, direction in enumerate(directions):
-    #             xoffset, yoffset = direction
-    #             valx, valy = direction
-    #             try:
-    #                 layout[row+yoffset][col+xoffset]
-    #             except IndexError:
-    #                 pass
-    #             else:
-    #                 if layout[row+yoffset][col+xoffset] == symbols[i]:
-    #                     val = layout[row+yoffset][col+xoffset]
-    #                     while val == '-' or val == '|':
-    #                         xoffset += valx
-    #                         yoffset += valy
-    #                         val = layout[row+yoffset][col+xoffset]
-    #                     thisnode = self.getNode(row+yoffset, col+xoffset)
-    #                     node.neighbors.append(thisnode)
-    #
-    #     for node in self.nodelist:
-    #         node.validDirections()

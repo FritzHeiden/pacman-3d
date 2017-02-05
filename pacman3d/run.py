@@ -1,27 +1,25 @@
 import pygame
 from pygame.locals import *
 from pacman3d.pacman import Pacman
-from pacman3d.tile import Tile
 from numpy import loadtxt
 from pacman3d.game_board import GameBoard
+from pacman3d.ghost import Ghost
 
 
 pygame.init()
-tile_width, tile_height = (160, 160)
-rows, cols = (3, 3)
+tile_width, tile_height = (20, 20)
+game_board = GameBoard(tile_width, tile_height)
+# game_board.read_in_game_board('maze.txt')
+game_board.read_in_game_board('pacman3d/maze.txt')
+
+rows, cols = game_board.get_size()
+
 screen = pygame.display.set_mode((cols*tile_width, rows*tile_height), 0, 32)
 background = pygame.surface.Surface((cols*tile_width, rows*tile_height)).convert()
 background.fill((0,0,0))
 
-game_board = GameBoard(tile_width, tile_height, rows, cols)
-game_board.create_basic_game_board()
-
-
-# nodes.createNodeList(filename)
 pacman = Pacman((16,16), game_board.nodelist[4])
-#
-# nodes.nodelist[26].portal = nodes.nodelist[31]
-# nodes.nodelist[31].portal = nodes.nodelist[26]
+ghost0 = Ghost((12, 12), game_board.nodelist[10])
 
 # clock = pygame.time.Clock()
 
@@ -35,8 +33,11 @@ while True:
     screen.blit(background, (0,0))
 
     game_board.draw(screen)
-    pacman.update()
     pacman.draw(screen)
+    pacman.update()
+
+    ghost0.draw(screen)
+    ghost0.update()
 
     pygame.display.update()
 

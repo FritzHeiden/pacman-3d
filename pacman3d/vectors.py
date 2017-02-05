@@ -33,7 +33,7 @@ class Vector2D(object):
 
     def magnitude(self):
         return math.sqrt(self.x**2 + self.y**2)
-        
+
     def normalize(self):
         '''Turn vector into a unit vector'''
         magnitude = self.magnitude()
@@ -77,7 +77,7 @@ class Vector2D(object):
         return Vector2D(self.x * scalar, self.y * scalar)
 
     def __div__(self, scalar):
-        return Vector2D(self.x /scalar, self.y / scalar)
+        return Vector2D(self.x /scalar, self.y / scala)
 
     def __eq__(self, other):
         '''Return True if other has same elements as self'''
