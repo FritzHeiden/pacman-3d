@@ -123,4 +123,6 @@ class Vector2D(object):
         '''Get cross product between two 2D vectors, only care
         about sign'''
         return self.x*vec.y - self.y*vec.x
-        
+
+    def magnitude_squared(self):
+        return self.x * self.x + self.y * self.y

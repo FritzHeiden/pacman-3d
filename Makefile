@@ -14,6 +14,7 @@ first_init:
 init:
 	pip install --upgrade pip
 	pip install pip-tools
+	rm requirements.txt
 	pip-compile
 	pip-sync
 	#python setup.py develop
