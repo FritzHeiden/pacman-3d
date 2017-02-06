@@ -11,9 +11,9 @@ class AbstractEntity(object):
         self.move_strategy = AbstractMoveStrategy(None, None)
         self.speed = 2
 
-    def update(self):
+    def move(self):
         self.move_strategy.move()
 
-    def draw(self, screen):
-        x, y = self.position.to_tuple()
-        pygame.draw.circle(screen, self.COLOR, (int(x), int(y)), self.dim[0])
+    #def draw(self, screen):
+#        x, y = self.position.to_tuple()
+        #pygame.draw.circle(screen, self.COLOR, (int(x), int(y)), self.dim[0])

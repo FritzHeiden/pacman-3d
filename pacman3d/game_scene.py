@@ -5,15 +5,6 @@ from pacman3d.ghost import Ghost
 import os
 
 class GameScene:
-    screen = None
-    font = None
-    tile_width = None
-    tile_height = None
-    game_board = None
-    row = None
-    cols = None
-    background = None
-
     def __init__(self):
         """ Get absolute path to resource, works for dev and for PyInstaller """
         def resource_path(relative_path):
@@ -44,9 +35,6 @@ class GameScene:
         self.ghost_list.append(Ghost((12, 12), self.game_board.nodelist[20]))
         self.ghost_list.append(Ghost((12, 12), self.game_board.nodelist[30]))
         self.ghost_list.append(Ghost((12, 12), self.game_board.nodelist[40]))
-
-    def handle_input(self):
-        test = None
 
     def update(self, time_elapsed):
         self.pacman.update()

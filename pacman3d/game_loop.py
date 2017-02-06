@@ -3,9 +3,6 @@ from pacman3d.game_scene import GameScene
 from pygame.locals import *
 
 class GameLoop:
-    clock = None
-    scene = None
-
     def __init__(self):
         pygame.init()
         self.clock = pygame.time.Clock()

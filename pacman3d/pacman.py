@@ -11,9 +11,12 @@ class Pacman(AbstractEntity):
         self.move_strategy = MoveStrategy(node, self)
         # self.speed = self.node.selfgit
 
-    # def draw(self, screen):
-    #     super().draw(screen)
-        # self.move_strategy.draw_target_node(screen)
+    def update(self):
+        super().move()
+
+    def draw(self, screen):
+        x, y = self.position.to_tuple()
+        pygame.draw.circle(screen, self.COLOR, (int(x), int(y)), self.dim[0])
 
     def eat_breadcrump(self, breadcrumps, score):
         for breadcrump in breadcrumps:
