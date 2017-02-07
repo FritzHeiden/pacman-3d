@@ -2,6 +2,7 @@ import pygame
 from pacman3d.game_board import GameBoard
 from pacman3d.pacman import Pacman
 from pacman3d.ghost import Ghost
+from pacman3d.model_loader import ModelLoader
 import os
 
 class GameScene:
@@ -16,7 +17,6 @@ class GameScene:
 
             return os.path.join(base_path, relative_path)
 
-        pygame.init()
         self.tile_width, self.tile_height = (20, 20)
         self.game_board = GameBoard(self.tile_width, self.tile_height)
         self.game_board.read_in_game_board(resource_path('data/maze.txt'))

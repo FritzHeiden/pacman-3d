@@ -1,6 +1,6 @@
+import pygame
 from numpy import loadtxt
 from pacman3d.node import Node
-import pygame
 from pacman3d.breadcrump import Breadcrump
 from pacman3d.score import Score
 
@@ -75,4 +75,3 @@ class GameBoard(object):
 
     def get_size(self):
         return self.rows, self.cols
-
